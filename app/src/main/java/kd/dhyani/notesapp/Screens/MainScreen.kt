@@ -117,7 +117,6 @@ fun MainScreen(navHostController: NavHostController) {
     }
 }
 
-
 @Composable
 fun NoDataAnimation() {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_data))
@@ -141,6 +140,7 @@ fun NoDataAnimation() {
 fun ListItems(notes: Notes, notesDBref: CollectionReference, navHostController: NavHostController) {
 
     var expanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }  // State to control dialog visibility
     val context = LocalContext.current
 
     Box(
@@ -174,14 +174,7 @@ fun ListItems(notes: Notes, notesDBref: CollectionReference, navHostController: 
 
             DropdownMenuItem(text = { Text(text = "Delete", style = TextStyle(MaterialTheme.colorScheme.onBackground), fontSize = 16.sp) },
                 onClick = {
-                    val alertDialog = AlertDialog.Builder(context)
-                    alertDialog.setMessage("Are you sure you want to delete this note?")
-                    alertDialog.setPositiveButton("Yes") { dialog, _ ->
-                        notesDBref.document(notes.id).delete()
-                        dialog?.dismiss()
-                    }
-                    alertDialog.setNegativeButton("No") { dialog, _ -> dialog?.dismiss() }
-                    alertDialog.show()
+                    showDialog = true  // Show the dialog when "Delete" is clicked
                     expanded = false
                 })
         }
@@ -207,5 +200,48 @@ fun ListItems(notes: Notes, notesDBref: CollectionReference, navHostController: 
                 text = notes.description, style = TextStyle(color = colorGrey)
             )
         }
+
+        // Display the dialog if showDialog is true
+        if (showDialog) {
+            DeleteNoteDialog(
+                onDismiss = { showDialog = false },
+                onConfirm = {
+                    notesDBref.document(notes.id).delete()
+                    showDialog = false
+                }
+            )
+        }
     }
+}
+
+@Composable
+fun DeleteNoteDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+//        title = {
+//            Text(
+//                text = "Delete Note",
+//                style = TextStyle(color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
+//            )
+//        },
+        text = {
+            Text(
+                text = "Are you really want to delete this note?",
+                style = TextStyle(color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f))
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text("Yes", color = MaterialTheme.colorScheme.primary)
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("No", color = MaterialTheme.colorScheme.secondary)
+            }
+        },
+        modifier = Modifier
+            .height(150.dp)  // Reduce width
+            .padding(5.dp)
+    )
 }
