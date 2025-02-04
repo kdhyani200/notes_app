@@ -45,10 +45,13 @@ Follow these simple steps to get the app up and running:
 3. Sync the project with Gradle. 🔄
 
 4. Set up Firebase in your Android project:
+   
     Go to the Firebase Console. 🌟
+   
     Create a new project and add your Android app.
+   
     Follow the instructions to download the google-services.json file and place it in the app/ directory. 🗂️
-5. Run the app on an emulator or physical device. 🎮
+6. Run the app on an emulator or physical device. 🎮
 
 🤝 Contributing
 We welcome contributions! 🎉 If you'd like to improve this app, feel free to fork the repository, create a new branch, and submit a pull request. 🔄
