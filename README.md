@@ -38,7 +38,7 @@ Follow these simple steps to get the app up and running:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/kdhyani200/NotesApp.git
+   git clone https://github.com/kdhyani200/notes_app.git
 
 2. Open the project in Android Studio. 📱
 
