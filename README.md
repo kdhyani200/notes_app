@@ -28,9 +28,9 @@ A modern, intuitive, and easy-to-use Notes App built with **Jetpack Compose** an
 
 Here’s a sneak peek into the app:
 
-![Home Screen](screenshots/home_screen.png)
+![Day_Mode](first.png)
 
-![Home Screen](screenshots/home_screen.png)
+![Dark_Mode](second.png)
 
 ## 🚀 Installation
 
